@@ -30,7 +30,8 @@ Route::group(['middleware' => 'autenticado'], function (){
 
 	//Route::get('equipo', 'EquipoController@getIndexEquipo')->name('equipo');
 
-  Route::get('/home', 'HomeController@index')->name('home');
+  // Route::get('/home', 'HomeController@index')->name('home');
+  Route::get('/home','ClienteController@getClientePerfil');
 
   Route::prefix('ciclo')->group(function (){
 	   Route::get('/', 'CicloController@getIndexCiclo');
@@ -81,7 +82,7 @@ Route::group(['middleware' => 'autenticado'], function (){
   Route::group(['middleware' => 'role:Cliente'], function (){       //['middleware' => 'Rol']
     
     Route::prefix('cliente')->group(function (){
-    Route::get('perfil','ClienteController@getClientePerfil');
+    Route::get('perfil','ClienteController@getClientePerfil')->name('home');
     Route::get('contactos','ClienteController@getContactoCliente');
     Route::get('centro_responsabilidad','ClienteController@getCentroResponsabilidadCliente');
     Route::get('direccion','ClienteController@getDireccionCliente');

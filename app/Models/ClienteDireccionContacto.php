@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClienteDireccionContacto extends Model
 {
+    public $primaryKey = 'cod_cliente';
     protected $table = 'vtade_cliente_direccion_contacto';
 
     protected $fillable = [

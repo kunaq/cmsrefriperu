@@ -15,7 +15,7 @@
                                 <!-- End mobile menu toggle-->
                             </li>
     
-                            <li class="dropdown d-none d-lg-block">
+                            {{-- <li class="dropdown d-none d-lg-block">
                                 <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img src="{{ asset('assets/images/flags/us.jpg') }}" alt="lang-image" height="12"> 
                                 </a>
@@ -45,9 +45,9 @@
                                     </a>
 
                                 </div>
-                            </li>
+                            </li> --}}
     
-                            <li class="dropdown notification-list">
+                            {{-- <li class="dropdown notification-list">
                                 <a class="nav-link dropdown-toggle  waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <i class="dripicons-bell noti-icon"></i>
                                     <span class="badge badge-pink rounded-circle noti-icon-badge">8</span>
@@ -136,7 +136,7 @@
                                     </a>
 
                                 </div>
-                            </li>
+                            </li> --}}
     
                             <li class="dropdown notification-list"> 
                                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -207,7 +207,7 @@
                             </a>
                         </div>
     
-                        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                        {{-- <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                 
                             <li class="d-none d-sm-block">
                                 <form class="app-search">
@@ -223,7 +223,7 @@
                                     </div>
                                 </form>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <div class="clearfix"></div>
                     </div>
 </div>

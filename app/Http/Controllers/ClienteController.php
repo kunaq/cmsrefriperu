@@ -43,8 +43,9 @@ class ClienteController extends Controller
 
         $codcli  = $request->session()->get('cod_cli'); 
         $cliente = Cliente::where('cod_cliente', $codcli)->firstOrFail();
+        $clientePlus = ClienteDireccionContacto::where('cod_cliente',$codcli)->firstOrFail();
         
-        return view('pages.cliente.perfil',compact('cliente','codcli'));
+        return view('pages.cliente.perfil',compact('cliente','codcli','clientePlus'));
 
     }
 

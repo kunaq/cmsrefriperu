@@ -3,9 +3,9 @@
                             <!-- Navigation Menu-->
                             <ul class="navigation-menu">
 
-                                <li class="has-submenu">
+                                {{-- <li class="has-submenu">
                                     <a href="{{url('home')}}"><i class="fe-bar-chart-2"></i>Dashboard</a>
-                                </li>
+                                </li> --}}
 
                                 @if(RoleHelper::hasAnyRole(config('constants.roles_name.cliente')))
                                     <li class="has-submenu">

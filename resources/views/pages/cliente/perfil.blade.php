@@ -8,18 +8,18 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-                        <div class="page-title-right">
+                        {{-- <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Adminox</a></li>
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Dashboard 1</li>
                             </ol>
-                        </div>
+                        </div> --}}
                         <h4 class="page-title lineatitle"><i class="fe-file-text"></i> PERFIL DE CLIENTE</h4>
                     </div>
                 </div>
             </div>
-
+            
             <div class="row">
                 <div class="col-lg-6">
                     <form class="card-box">
@@ -27,19 +27,19 @@
 
                         <div class="">
                             <label class="mb-1 mt-3 text-muted">Razon social</label>
-                            <input type="text" name="razonsocial" id="razonsocial" class="form-control" value="{{$cliente->dsc_razon_social}}">
+                            <input type="text" name="razonsocial" id="razonsocial" class="form-control" value="{{$cliente->dsc_razon_social}}" disabled>
                         </div>
                         <div class="">
                             <label class="mb-1 mt-3 text-muted">N° RUC</label>
-                            <input type="text" name="numruc" id="numruc" class="form-control" value="{{$cliente->dsc_documento}}" />
+                            <input type="text" name="numruc" id="numruc" class="form-control" value="{{$cliente->dsc_documento}}" disabled/>
                         </div>
                         <div class="">
                             <label class="mb-1 mt-3 text-muted">Email</label>
-                            <input type="text" name="email" id="email" class="form-control" value="{{$cliente->dsc_email}}" />
+                            <input type="text" name="email" id="email" class="form-control" value="{{$clientePlus->dsc_correo}}" disabled/>
                         </div>
                         <div class="">
                             <label class="mb-1 mt-3 text-muted">Teléfono</label>
-                            <input type="text" name="telefono" id="telefono" class="form-control" value="{{$cliente->dsc_telefono_1}}" />
+                            <input type="text" name="telefono" id="telefono" class="form-control" value="{{$clientePlus->dsc_telefono1}}" disabled/>
                         </div>
                     </form>
                 </div>
@@ -356,7 +356,7 @@
                '<th>Tipo</th>' +
                '<th>Ubicacion</th>' +
                '<th>Teléfono</th>' +
-               '<th>Detalle</th>' +
+            //    '<th>Detalle</th>' +
                '</tr>' +
                '</thead>' +
                '<tbody>';
@@ -396,11 +396,11 @@
                 '<td>' + codtipo + '</td>' +
                 '<td>' + ubicacion + '</td>' +
                 '<td>' + telefono + '</td>' +
-                '<td style="text-align:center;">' +
-            '<a class="urlicon" title="Ver detalle" href="javascript::void(0)" onclick="verdetalle(' + "'" + value.codcliente + "'" + ',' + "'" + value.numlinea + "'" + ')" >' +
-                '<i class="fas fa-search"></i>' +
-                '</a>' +
-                '</td>' +
+            //     '<td style="text-align:center;">' +
+            // '<a class="urlicon" title="Ver detalle" href="javascript::void(0)" onclick="verdetalle(' + "'" + value.codcliente + "'" + ',' + "'" + value.numlinea + "'" + ')" >' +
+            //     '<i class="fas fa-search"></i>' +
+            //     '</a>' +
+            //     '</td>' +
                 '</tr>';
 
         k++;
