@@ -18,7 +18,7 @@
                                     <ul class="submenu">
                                         <li><a href="{{url('equipo')}}">Listado de equipos</a></li>
                                         <!--<li><a href="index.html">Agregar equipos</a></li>-->
-                                        <li><a href="dashboard-2.html">Listado de ubicaciones</a></li>
+                                        <li><a href="{{url('equipo/detalle')}}">Listado de ubicaciones</a></li>
                                     </ul>
                                 </li>
 

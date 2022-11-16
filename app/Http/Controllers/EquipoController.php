@@ -143,7 +143,24 @@ class EquipoController extends Controller{
     }
 
     public function getDetalleEquipo(Request $request){
-        return view('pages.equipo.detalle');    
+
+        $marcas  = DB::table('feima_marca_articulo as marca')
+                   ->select('marca.cod_marca', 'marca.dsc_marca','marca.flg_activo')
+                   ->get();
+
+        $modelos = DB::table('feima_modelo_articulo as modelo')
+                   ->select('modelo.cod_modelo','modelo.dsc_modelo','modelo.flg_activo')
+                   ->get();
+
+        $tipos   = DB::table('gsema_tipo_equipo as tipo')
+                   ->select('tipo.cod_tipo_equipo','tipo.dsc_tipo_equipo','tipo.flg_activo')
+                   ->get();
+
+        $subtipos= DB::table('gsema_subtipo_equipo as subtipo')
+                   ->select('subtipo.cod_subtipo_equipo','subtipo.dsc_subtipo_equipo','subtipo.flg_activo')
+                   ->get();       
+
+        return view('pages.equipo.detalle',compact('marcas','modelos','tipos','subtipos'));    
     }
 
     public function getExportarEquipo(Request $request){
