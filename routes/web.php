@@ -47,6 +47,9 @@ Route::group(['middleware' => 'autenticado'], function (){
     Route::get('listar','EquipoController@getListadoEquipo');
     Route::get('exportar', 'EquipoController@getExportarEquipo');
     Route::get('detalle/{id?}','EquipoController@getDetalleEquipo');
+    Route::get('modalDetalle/{cod_equipo?}','EquipoController@getModalDetalleEquipo');
+    Route::get('listaIntervencion/{cod_equipo?}','EquipoController@getListaIntervencion');
+    
   });
 
 	Route::prefix('incidencia')->group(function (){

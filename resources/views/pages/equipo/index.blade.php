@@ -100,6 +100,100 @@
         </div> <!-- end container-fluid -->
 
     </div> <!-- end content -->
+
+
+    {{-- ---------------------Modal detalle equipo------------------------------- --}}
+    <div class="modal fade" id="modalDetalleEquipo" tabindex="-1" role="dialog" aria-labelledby="modalDetalleEquipoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width:80% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDetalleEquipoLabel"></h5><h5 class="modal-title" id="EstadoDetalleEquipo"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#detalleEquipo" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                <span class="d-block d-sm-none"><i class="mdi mdi-home-variant"></i></span>
+                                <span class="d-none d-sm-block">Detalle</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#intervencion" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                <span class="d-block d-sm-none"><i class="mdi mdi-account"></i></span>
+                                <span class="d-none d-sm-block">Intervencion</span>
+                            </a>
+                        </li>
+                                    
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="detalleEquipo">
+                            <div id="detalleEquipo-content">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="mb-1 mt-3 text-muted">Tipo</label>
+                                        <input type="text" name="tipoEquipo" id="tipoEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-1 mt-3 text-muted">Subtipo</label>
+                                        <input type="text" name="subtipoEquipo" id="subtipoEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="mb-1 mt-3 text-muted">Marca</label>
+                                        <input type="text" name="marcaEquipo" id="marcaEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-1 mt-3 text-muted">Modelo</label>
+                                        <input type="text" name="modeloEquipo" id="modeloEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="mb-1 mt-3 text-muted">Act. Fijo</label>
+                                        <input type="text" name="actFijoEquipo" id="actFijoEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mb-1 mt-3 text-muted">Inventario</label>
+                                        <input type="text" name="inventarioEquipo" id="inventarioEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mb-1 mt-3 text-muted">N° de Serie</label>
+                                        <input type="text" name="numSerieEquipo" id="numSerieEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="mb-1 mt-3 text-muted">Sede</label>
+                                        <input type="text" name="sedeEquipo" id="sedeEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="mb-1 mt-3 text-muted">Ubicación</label>
+                                        <input type="text" name="ubicacionEquipo" id="ubicacionEquipo" class="form-control" value="" disabled>
+                                    </div>
+                                </div>
+                            </div>                    
+                        </div>
+                        <div class="tab-pane" id="intervencion">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="intervencion-content"></div> 
+                                </div>
+                            </div>               
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 @push('scripts')
@@ -252,7 +346,7 @@
             },
             success:function(result){
                 var data = result;
-                console.log(data.items.length);
+               // console.log(data.items.length);
                 if(data.items.length > 0){
                     $("#equipo-content").html(getEquipoTable(data.items));
 
@@ -326,6 +420,131 @@
 
         return body;
 
+    }
+
+    function verdetalle(codigo){
+        $('#modalDetalleEquipo').modal('show');
+        var cod_modelo = '';
+
+        $.ajax({
+            type: 'GET',
+            url: "{{url('equipo/modalDetalle')}}",
+            data: {
+                'cod_equipo' : codigo,
+            },
+            beforeSend: function () {
+                $("#equipo-body").LoadingOverlay("show");
+            },
+            complete: function () {
+                $("#equipo-body").LoadingOverlay("hide");
+            },
+            success:function(result){
+                var data = result;
+               // console.log(data);
+                cod_modelo = data[0]['cod_modelo'];
+                $('#modalDetalleEquipoLabel').html(codigo + '-' + data[0]['dsc_equipo']);
+                $('#EstadoDetalleEquipo').html(data[0]['dsc_estado']);
+                $('#tipoEquipo').val(data[0]['dsc_tipo_equipo']);
+                $('#subtipoEquipo').val(data[0]['dsc_subtipo_equipo']);
+                $('#marcaEquipo').val(data[0]['dsc_marca']);
+                $('#modeloEquipo').val(data[0]['dsc_modelo']);
+                $('#actFijoEquipo').val(data[0]['cod_activo']);
+                $('#inventarioEquipo').val(data[0]['cod_inventario']);
+                $('#numSerieEquipo').val(data[0]['num_serie']);
+                $('#ubicacionEquipo').val(data[0]['dsc_ubicacion']);
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('equipo/listaIntervencion')}}",
+                    data: {
+                        'cod_equipo' : codigo,
+                        'cod_modelo' : cod_modelo
+                    },
+                    beforeSend: function () {
+                        $("#equipo-body").LoadingOverlay("show");
+                    },
+                    complete: function () {
+                        $("#equipo-body").LoadingOverlay("hide");
+                    },
+                    success:function(result){
+                        var data = result;
+                        //console.log(data);
+                        var body  = '<div class="card-box table-responsive">';
+                        // body += '<div class="row">'+'<div class="col-md-2" style="margin-bottom:0.5em;">Exportar: <img src="{{ asset("assets/images/icons/icon_excel.png") }}" title="Click para exportar" onclick="exportar()" style="height:30px;cursor:pointer;"></div>'+'</div>';
+                       // body += '<div class="row">'+'<div class="col-md-8 col-md-offset-md-4" style="margin-bottom:0.5em;">Exportar: </div>'+'</div>';
+
+                        body += '<table id="tbl-det-equipo" class="table table-bordered dt-responsive" style="border-collapse:collapse; border-spacing:0; width:100%; font-size:16px">' +
+                                    '<thead>' +
+                                        '<tr class="headtable"  style="text-align:center;">' +
+                                            '<th style="vertical-align:middle; width:5%;">Ejec</th>' + 
+                                            '<th style="width:10%;">Fecha Programado</th>' +
+                                            '<th style="width:10%;">Fecha Ejecutado</th>' + 
+                                            '<th style="width:5%;">Tipo Intervención</th>' +
+                                            '<th style="vertical-align:middle; width:20%;">Responsable</th>' +
+                                            '<th style="width:5%;">Plan Asociado</th>' +
+                                            '<th style="width:15%;">Orden Trabajo Asociado</th>' +
+                                        '</tr>' +
+                                    '</thead>' +
+                                    '<tbody>';
+        
+
+                        $.each(data, function (index, value){
+                            console.log(value)
+                            var colorEdo = '';
+                            switch (value.dsc_estado){
+                                case 'ATENDIDO':
+                                    colorEdo = '#2D8B57';
+                                    break;
+                                case 'PENDIENTE': 
+                                    colorEdo = '#FF4601';
+                                    break;
+                                case 'EN PROCESO': 
+                                    colorEdo = '#FFD603';
+                                    break;
+                                case 'SIN ORDEN DE TRABAJO': 
+                                    colorEdo = '#A9A9A9';
+                                    break;
+                            }
+
+                            //fchProg = date('d/m/Y', strtotime(value.fecha1));
+
+                            body += '<tr>' + 
+                                        '<td><ion-icon size="large" style="color:' + colorEdo + '" name="ellipse"></ion-icon></td>' +
+                                        '<td>' + fchProg + '</td>' +
+                                        '<td>' + value.fch_ejecucion + '</td>' +
+                                        '<td>' + value.dsc_tipo_plan + '</td>' +
+                                        '<td>' + value.dsc_responsable + '</td>' +
+                                        '<td style="text-align:center;">' + value.num_plan + '</td>' +
+                                        '<td>' + value.cod_orden_trabajo + '</td>' +
+                                    '</tr>';
+                        });  
+                        
+                        body += '</tbody>' +
+                                '</table>' +
+                                '</div>';
+                        
+                        $('#intervencion-content').html(body);
+
+                        $("#tbl-det-equipo").DataTable({
+                            responsive: true,
+                            filter: false,
+                            lengthChange: true,
+                            ordering: false,
+                            orderMulti: false,
+                            paging : true,
+                            info: true,
+                            language:{
+                                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                            }
+                        });
+        
+                        
+                    }
+                });
+               
+            }
+        });
+        
     }
 
     //No se encontraron registros
