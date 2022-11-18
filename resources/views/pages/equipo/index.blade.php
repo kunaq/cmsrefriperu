@@ -471,18 +471,18 @@
                         //console.log(data);
                         var body  = '<div class="card-box table-responsive">';
                         // body += '<div class="row">'+'<div class="col-md-2" style="margin-bottom:0.5em;">Exportar: <img src="{{ asset("assets/images/icons/icon_excel.png") }}" title="Click para exportar" onclick="exportar()" style="height:30px;cursor:pointer;"></div>'+'</div>';
-                       // body += '<div class="row">'+'<div class="col-md-8 col-md-offset-md-4" style="margin-bottom:0.5em;">Exportar: </div>'+'</div>';
+                        body += '<div class="row">'+'<div class="col-md-12" style="margin-bottom:-2em; text-align:right;"><ion-icon size="large" style="color:#2D8B57;vertical-align: sub;" name="ellipse"></ion-icon>ATENDIDO <ion-icon size="large" style="color:#FFD603;vertical-align: sub;" name="ellipse"></ion-icon>EN PROCESO <ion-icon size="large" style="color:#FF4601;vertical-align: sub;" name="ellipse"></ion-icon>PENDIENTE <ion-icon size="large" style="color:#A9A9A9;vertical-align: sub;" name="ellipse"></ion-icon>SIN ORDEN DE TRABAJO</div></div>';
 
                         body += '<table id="tbl-det-equipo" class="table table-bordered dt-responsive" style="border-collapse:collapse; border-spacing:0; width:100%; font-size:16px">' +
                                     '<thead>' +
                                         '<tr class="headtable"  style="text-align:center;">' +
-                                            '<th style="vertical-align:middle; width:5%;">Ejec</th>' + 
-                                            '<th style="width:10%;">Fecha Programado</th>' +
-                                            '<th style="width:10%;">Fecha Ejecutado</th>' + 
-                                            '<th style="width:5%;">Tipo Intervención</th>' +
-                                            '<th style="vertical-align:middle; width:20%;">Responsable</th>' +
+                                            '<th style="width:5%;">Ejec</th>' + 
+                                            '<th style="width:15%;">Fecha Programado</th>' +
+                                            '<th style="width:15%;">Fecha Ejecutado</th>' + 
+                                            '<th style="width:10%;">Tipo Intervención</th>' +
+                                            '<th style="width:40%;">Responsable</th>' +
                                             '<th style="width:5%;">Plan Asociado</th>' +
-                                            '<th style="width:15%;">Orden Trabajo Asociado</th>' +
+                                            '<th style="width:20%;">Orden Trabajo Asociado</th>' +
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody>';
@@ -506,12 +506,13 @@
                                     break;
                             }
 
-                            //fchProg = date('d/m/Y', strtotime(value.fecha1));
+                            fchProg = new Date(value.fch_programacion).toLocaleDateString();
+                            fchEjec = new Date(value.fch_ejecucion).toLocaleDateString();
 
                             body += '<tr>' + 
                                         '<td><ion-icon size="large" style="color:' + colorEdo + '" name="ellipse"></ion-icon></td>' +
                                         '<td>' + fchProg + '</td>' +
-                                        '<td>' + value.fch_ejecucion + '</td>' +
+                                        '<td>' + fchEjec + '</td>' +
                                         '<td>' + value.dsc_tipo_plan + '</td>' +
                                         '<td>' + value.dsc_responsable + '</td>' +
                                         '<td style="text-align:center;">' + value.num_plan + '</td>' +

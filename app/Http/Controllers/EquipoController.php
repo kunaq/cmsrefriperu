@@ -178,6 +178,10 @@ class EquipoController extends Controller{
                     ->where('equipo.cod_equipo','=',$cod_equipo)
                     ->get();
 
+                    $fila = DB::select('SET NOCOUNT ON; EXEC usp_Consultar_ListarEquipos ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?',[22,'','','','','','','',$cod_equipo,'','','','','','','','']);
+
+                    
+
         return $equipo;   
     }
 
@@ -224,6 +228,28 @@ class EquipoController extends Controller{
             DB::rollback();
             return $this->redirectToHome();
         }
+    }
+
+    public function getSedeDetalleEquipo(Request $request){
+        try{
+            $cod_cliente = $request->cod_cliente;
+
+            $direccion= DB::table('vtade_cliente_direccion as direccion')
+                    ->select('direccion.dsc_nombre_direccion','direccion.num_linea')
+                    ->where('direccion.cod_cliente','=',$cod_cliente)
+                    ->get();
+  
+            $html = '<option value="0">[Todos]</option>';
+  
+            foreach($direccion as $sede){
+              $html .= '<option value="'.$sede->num_linea.'">'.$sede->dsc_nombre_direccion.'</option>';
+            }
+  
+            echo $html;
+  
+        }catch(\Exception $e){
+          return $this->errorResponse();
+        }  
     }
 
 

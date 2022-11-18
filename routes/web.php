@@ -49,6 +49,7 @@ Route::group(['middleware' => 'autenticado'], function (){
     Route::get('detalle/{id?}','EquipoController@getDetalleEquipo');
     Route::get('modalDetalle/{cod_equipo?}','EquipoController@getModalDetalleEquipo');
     Route::get('listaIntervencion/{cod_equipo?}','EquipoController@getListaIntervencion');
+    Route::get('listaSede/{cod_cliente?}','EquipoController@getSedeDetalleEquipo');
     
   });
 
