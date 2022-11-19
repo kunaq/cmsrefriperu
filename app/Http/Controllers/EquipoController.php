@@ -144,24 +144,28 @@ class EquipoController extends Controller{
 
     public function getDetalleEquipo(Request $request){
         $codCliente = $request->session()->get('cod_cli');
+          $listaSede  = DB::table('vtade_cliente_direccion as direccion')
+                         ->select('direccion.dsc_nombre_direccion', 'direccion.num_linea')
+                         ->where('direccion.cod_cliente', '=', $codCliente)
+                         ->orderBy('direccion.num_linea')
+                         ->get();
+        // $marcas  = DB::table('feima_marca_articulo as marca')
+        //            ->select('marca.cod_marca', 'marca.dsc_marca','marca.flg_activo')
+        //            ->get();
 
-        $marcas  = DB::table('feima_marca_articulo as marca')
-                   ->select('marca.cod_marca', 'marca.dsc_marca','marca.flg_activo')
-                   ->get();
+        // $modelos = DB::table('feima_modelo_articulo as modelo')
+        //            ->select('modelo.cod_modelo','modelo.dsc_modelo','modelo.flg_activo')
+        //            ->get();
 
-        $modelos = DB::table('feima_modelo_articulo as modelo')
-                   ->select('modelo.cod_modelo','modelo.dsc_modelo','modelo.flg_activo')
-                   ->get();
+        // $tipos   = DB::table('gsema_tipo_equipo as tipo')
+        //            ->select('tipo.cod_tipo_equipo','tipo.dsc_tipo_equipo','tipo.flg_activo')
+        //            ->get();
 
-        $tipos   = DB::table('gsema_tipo_equipo as tipo')
-                   ->select('tipo.cod_tipo_equipo','tipo.dsc_tipo_equipo','tipo.flg_activo')
-                   ->get();
+        // $subtipos= DB::table('gsema_subtipo_equipo as subtipo')
+        //            ->select('subtipo.cod_subtipo_equipo','subtipo.dsc_subtipo_equipo','subtipo.flg_activo')
+        //            ->get();   'marcas','modelos','tipos','subtipos',    
 
-        $subtipos= DB::table('gsema_subtipo_equipo as subtipo')
-                   ->select('subtipo.cod_subtipo_equipo','subtipo.dsc_subtipo_equipo','subtipo.flg_activo')
-                   ->get();       
-
-        return view('pages.equipo.detalle',compact('marcas','modelos','tipos','subtipos', 'codCliente'));    
+        return view('pages.equipo.detalle',compact( 'listaSede','codCliente'));    
     }
 
     public function getModalDetalleEquipo(Request $request){

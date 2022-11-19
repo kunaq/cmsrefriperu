@@ -30,13 +30,12 @@
 
             <div class="container" style="margin-left: 0"> {{-- clase para el filtro dinamico ==  cntfiltro --}}
                 <div class="row" style="padding-bottom:15px;">
-                    {{$codCliente}}
                     <div class="col-md-4">
                         <h5 class="headerh">Sede</h5>
                         <select class="form-control" id="sede" name="sede">
                             <option value="0">Todos</option>
-                            @foreach($tipos as $type)
-                                <option value="{{ $type->cod_tipo_equipo }}">{{ $type->dsc_tipo_equipo }}</option>
+                            @foreach($listaSede as $list)
+                                <option value="{{ $list->num_linea }}">{{ $list->dsc_nombre_direccion }}</option>
                             @endforeach  
                         </select>
                     </div>
@@ -112,17 +111,20 @@
         
         $("#sede").change(function (){
             //Aqui se llama al subtipo
-            var idtipo = $(this).val();
+            var linea = $(this).val();
+            var codCliente = "{{$codCliente}}";
             $.ajax({
                 headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url : "{{ url('tipoequipo/buscarsubtipo')}}",
-                type: "post",
-                data: "code=" + idtipo,
-                cache: false,
-                processData: false,
+                url : "{{ url('equipo/ubicaciones')}}",
+                type: 'GET',
+                data: {
+                    'codCliente' : codCliente,
+                    'numLinea' : linea
+                },
                 success:function(data){
+                    //console.log('aqui',data);
                     $('#ubicacion').html(data);
                     $('#ubicacion').trigger('change');   
                 }
@@ -131,6 +133,7 @@
             $("#equipo-content").html("");
             loadPageData();
         });
+
         //here start the triggers for the filters..
         $("#ubicacion").change(function(){
             $("#equipo-content").html("");
