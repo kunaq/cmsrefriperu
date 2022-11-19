@@ -30,7 +30,7 @@
 
             <div class="container" style="margin-left: 0"> {{-- clase para el filtro dinamico ==  cntfiltro --}}
                 <div class="row" style="padding-bottom:15px;">
-                    {!! $tipos !!}
+                    {{$codCliente}}
                     <div class="col-md-4">
                         <h5 class="headerh">Sede</h5>
                         <select class="form-control" id="sede" name="sede">
