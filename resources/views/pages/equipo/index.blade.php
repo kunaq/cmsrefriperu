@@ -440,7 +440,7 @@
             },
             success:function(result){
                 var data = result;
-               // console.log(data);
+                //console.log(data);
                 cod_modelo = data[0]['cod_modelo'];
                 $('#modalDetalleEquipoLabel').html(codigo + '-' + data[0]['dsc_equipo']);
                 $('#EstadoDetalleEquipo').html(data[0]['dsc_estado']);
@@ -452,6 +452,7 @@
                 $('#inventarioEquipo').val(data[0]['cod_inventario']);
                 $('#numSerieEquipo').val(data[0]['num_serie']);
                 $('#ubicacionEquipo').val(data[0]['dsc_ubicacion']);
+                $('#sedeEquipo').val(data[0]['dsc_sede']);
 
                 $.ajax({
                     type: 'GET',
@@ -489,7 +490,7 @@
         
 
                         $.each(data, function (index, value){
-                            console.log(value)
+                            //console.log(value)
                             var colorEdo = '';
                             switch (value.dsc_estado){
                                 case 'ATENDIDO':

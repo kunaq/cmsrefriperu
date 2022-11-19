@@ -182,7 +182,7 @@ class EquipoController extends Controller{
 
                     
 
-        return $equipo;   
+        return $fila;   
     }
 
     public function getListaIntervencion(Request $Request){
