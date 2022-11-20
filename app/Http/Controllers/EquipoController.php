@@ -162,29 +162,43 @@ class EquipoController extends Controller{
                    ->join('gsema_subtipo_equipo','equipo.cod_subtipo_equipo', '=', 'gsema_subtipo_equipo.cod_subtipo_equipo')
                    ->join('feima_marca_articulo','equipo.cod_marca', '=', 'feima_marca_articulo.cod_marca')
                    ->leftJoin('feima_modelo_articulo','equipo.cod_modelo', '=', 'feima_modelo_articulo.cod_modelo')
+                   ->join('mtoma_ubicacion', 'mtoma_ubicacion.cod_ubicacion', '=', 'equipo.cod_ubicacion')
                    ->select('equipo.cod_equipo','equipo.dsc_equipo','equipo.cod_tipo_equipo','gsema_tipo_equipo.dsc_tipo_equipo',
                           'gsema_subtipo_equipo.dsc_subtipo_equipo','feima_marca_articulo.dsc_marca','feima_modelo_articulo.dsc_modelo','equipo.num_serie',
                           'equipo.num_parte','equipo.fch_compra','equipo.cod_proveedor','equipo.cod_cliente','equipo.num_pedido');
 
+              //             where mtoma_ubicacion.num_linea = '6' 
+						  // and mtoma_ubicacion.cod_cliente = 'CLI0000364' 
+						  // and mtoma_ubicacion.cod_ubicacion_sup = '00000073'
       $total    = $equipos->count();
 
-      if (!empty($numserie))
-          $equipos = $equipos->where('equipo.num_serie', 'like', '%' . $numserie . '%');
+      if (!empty($sede)){
+          $equipos = $equipos->where('mtoma_ubicacion.num_linea', '=', $sede);
+      }
+      if (!empty($ubicacion)){
+          $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion', '=', $ubicacion);
+      }
+      if (!empty($ubicacion2)){
+        $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion_sup', '=', $ubicacion2);
+      }
 
-      if (!empty($tipo))
-          $equipos = $equipos->where('equipo.cod_tipo_equipo', '=', $tipo);
+      // if (!empty($numserie))
+      //     $equipos = $equipos->where('equipo.num_serie', 'like', '%' . $numserie . '%');
 
-      if (!empty($subtipo))
-          $equipos = $equipos->where('equipo.cod_subtipo_equipo', '=', $subtipo);
+      // if (!empty($tipo))
+      //     $equipos = $equipos->where('equipo.cod_tipo_equipo', '=', $tipo);
 
-      if (!empty($nomequipo))
-          $equipos = $equipos->where('equipo.dsc_equipo', 'like', '%' . $nomequipo . '%');
+      // if (!empty($subtipo))
+      //     $equipos = $equipos->where('equipo.cod_subtipo_equipo', '=', $subtipo);
 
-      if (!empty($codmarca))
-          $equipos = $equipos->where('equipo.cod_marca', '=', $codmarca);
+      // if (!empty($nomequipo))
+      //     $equipos = $equipos->where('equipo.dsc_equipo', 'like', '%' . $nomequipo . '%');
 
-      if (!empty($codmodel))
-          $equipos = $equipos->where('equipo.cod_modelo', '=', $codmodel);
+      // if (!empty($codmarca))
+      //     $equipos = $equipos->where('equipo.cod_marca', '=', $codmarca);
+
+      // if (!empty($codmodel))
+      //     $equipos = $equipos->where('equipo.cod_modelo', '=', $codmodel);
 
       //Hacemos la validacion aqui:
       if($role == config('constants.roles_name.cliente')){

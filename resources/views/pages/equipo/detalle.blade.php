@@ -189,13 +189,15 @@
 
     //Se inicia con la funcion onload
     function loadPageData(){
+        var lineaSup = $('#ubicacion').val().split('+')[1];
+        var linea = $('#ubicacion').val().split('+')[0];
         $.ajax({
             type: 'GET',
             url: "{{url('equipo/listar2')}}",
             data: {
                 'sede'     : $("#sede").val(),
-                'ubicacion'  : $("#ubicacion").val(),
-                'ubicacion2'  : $("#ubicacion2").val()
+                'ubicacion'  : linea,
+                'ubicacion2'  : lineaSup
             },
             beforeSend: function () {
                 $("#equipo-body").LoadingOverlay("show");
@@ -205,7 +207,7 @@
             },
             success:function(result){
                 var data = result;
-                console.log('catidad de filas',data.items.length, 'codigo de sede', sede.value, 'codigo de ubicacion', ubicacion.value);
+                //console.log('catidad de filas',data.items.length, 'codigo de sede', sede.value, 'ubicacion', ubicacion.value, 'ubicacion2', ubicacion2.value);
                 if(data.items.length > 0 && sede.value!=0 ){
                     $("#equipo-content").html(getEquipoTable(data.items));
 
