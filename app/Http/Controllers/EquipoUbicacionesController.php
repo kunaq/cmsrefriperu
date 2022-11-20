@@ -44,13 +44,13 @@ class EquipoUbicacionesController extends Controller
                          ->select('ubicacion.dsc_ubicacion', 'ubicacion.cod_ubicacion','ubicacion.cod_ubicacion_sup')
                          ->where('ubicacion.cod_cliente', '=', $codCliente)
                          ->where('ubicacion.num_linea', '=', $numLinea)
-                         ->orderBy('ubicacion.cod_ubicacion')
+                         ->orderBy('ubicacion.dsc_ubicacion')
                          ->get();
 
           $html = '<option value="0">[Todos]</option>';
 
           foreach($listaUbicacion as $lista){
-            $html .= '<option value="'.$lista->cod_ubicacion.'">'.$lista->dsc_ubicacion.'</option>';
+            $html .= '<option value="'.$lista->cod_ubicacion.'+'.$lista->cod_ubicacion_sup.'">'.$lista->dsc_ubicacion.'</option>';
           }
 
           echo $html;
@@ -60,7 +60,42 @@ class EquipoUbicacionesController extends Controller
       }  
     }
 
+    public function getUbicacion2(Request $request){
+      try{
+        // codCliente : {{$codCliente}},
+        //             numLinea : linea
+        //select * from mtoma_ubicacion where num_linea = '6' and cod_cliente = 'CLI0000364' and cod_ubicacion_sup = '00000010'
+          $codCliente  = $request->codCliente;
+          $numLinea = $request->numLinea;
+          $lineaSuperior = $request->lineaSuperior;
+          $listaUbicacion  = DB::table('mtoma_ubicacion as ubicacion')
+                         ->select('ubicacion.dsc_ubicacion', 'ubicacion.cod_ubicacion','ubicacion.cod_ubicacion_sup')
+                         ->where('ubicacion.cod_cliente', '=', $codCliente)
+                         ->where('ubicacion.num_linea', '=', $numLinea)
+                         ->where('ubicacion.cod_ubicacion_sup','=', $lineaSuperior)
+                         ->orderBy('ubicacion.dsc_ubicacion')
+                         ->get();
 
+          
+          $html = '<div class="col-md-6">
+                    <h5 class="headerh">Ubicación 2</h5>
+                    <select class="form-control" id="ubicacion2" name="ubicacion2">
+                        <option value="0">Todos</option>';
 
+          foreach($listaUbicacion as $lista){
+            $html .= '<option value="'.$lista->cod_ubicacion.'">'.$lista->dsc_ubicacion.'</option>';
+          }
+
+          $html .= '
+                      </select>
+                    </div>
+                    ';
+
+          echo $html;
+
+      }catch(\Exception $e){
+        return $this->errorResponse();
+      }  
+    }
     
 }

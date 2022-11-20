@@ -142,12 +142,95 @@ class EquipoController extends Controller{
 
     }
 
+    public function getListadoEquipo2(Request $request){
+      $numserie  = $request->numserie;
+      $tipo      = $request->tipo;
+      $subtipo   = $request->subtipo;
+      $nomequipo = $request->nomequipo;
+      $codmarca  = $request->codmarca;
+      $codmodel  = $request->codmodel;
+
+      //Se define la session del usuario
+      $role      = Session()->get('rol');
+
+      //Se hace la busqueda
+      $equipos   = DB::table('gsema_equipo as equipo')
+                   ->join('gsema_tipo_equipo','equipo.cod_tipo_equipo', '=', 'gsema_tipo_equipo.cod_tipo_equipo')
+                   ->join('gsema_subtipo_equipo','equipo.cod_subtipo_equipo', '=', 'gsema_subtipo_equipo.cod_subtipo_equipo')
+                   ->join('feima_marca_articulo','equipo.cod_marca', '=', 'feima_marca_articulo.cod_marca')
+                   ->leftJoin('feima_modelo_articulo','equipo.cod_modelo', '=', 'feima_modelo_articulo.cod_modelo')
+                   ->select('equipo.cod_equipo','equipo.dsc_equipo','equipo.cod_tipo_equipo','gsema_tipo_equipo.dsc_tipo_equipo',
+                          'gsema_subtipo_equipo.dsc_subtipo_equipo','feima_marca_articulo.dsc_marca','feima_modelo_articulo.dsc_modelo','equipo.num_serie',
+                          'equipo.num_parte','equipo.fch_compra','equipo.cod_proveedor','equipo.cod_cliente','equipo.num_pedido');
+
+      $total    = $equipos->count();
+
+      if (!empty($numserie))
+          $equipos = $equipos->where('equipo.num_serie', 'like', '%' . $numserie . '%');
+
+      if (!empty($tipo))
+          $equipos = $equipos->where('equipo.cod_tipo_equipo', '=', $tipo);
+
+      if (!empty($subtipo))
+          $equipos = $equipos->where('equipo.cod_subtipo_equipo', '=', $subtipo);
+
+      if (!empty($nomequipo))
+          $equipos = $equipos->where('equipo.dsc_equipo', 'like', '%' . $nomequipo . '%');
+
+      if (!empty($codmarca))
+          $equipos = $equipos->where('equipo.cod_marca', '=', $codmarca);
+
+      if (!empty($codmodel))
+          $equipos = $equipos->where('equipo.cod_modelo', '=', $codmodel);
+
+      //Hacemos la validacion aqui:
+      if($role == config('constants.roles_name.cliente')){
+        $codcli  = Session()->get('cod_cli');
+        $equipos = $equipos->where('equipo.cod_cliente', '=', $codcli);
+      }
+
+      $filtrados = $equipos->count();
+
+      $equipos   = $equipos
+                  ->orderBy('equipo.dsc_equipo')
+                  ->get();
+
+      $data = [];
+      foreach ($equipos as $item){
+        
+        if($item->dsc_modelo!=null){
+          $model = $item->dsc_modelo;
+        }else{
+          $model = '';
+        }
+
+        array_push($data, [
+          "code"        => $item->cod_equipo,
+          "nombre"      => AppHelper::clientFormat($item->dsc_equipo),
+          "idtipo"      => $item->cod_tipo_equipo,
+          "nomtipo"     => $item->dsc_tipo_equipo,
+          "nomsubtipo"  => $item->dsc_subtipo_equipo,
+          "marca"       => $item->dsc_marca,
+          "modelo"      => $model,
+          "numserie"    => $item->num_serie,
+          "numparte"    => $item->num_parte,
+          "fechacompra" => $item->fch_compra,
+          "numpedido"   => $item->num_pedido
+        ]);
+      }
+
+      $result = $this->dataTableResult($total,$filtrados,$data);
+
+      return $result;
+
+  }
+
     public function getDetalleEquipo(Request $request){
         $codCliente = $request->session()->get('cod_cli');
           $listaSede  = DB::table('vtade_cliente_direccion as direccion')
                          ->select('direccion.dsc_nombre_direccion', 'direccion.num_linea')
                          ->where('direccion.cod_cliente', '=', $codCliente)
-                         ->orderBy('direccion.num_linea')
+                         ->orderBy('direccion.dsc_nombre_direccion')
                          ->get();
         // $marcas  = DB::table('feima_marca_articulo as marca')
         //            ->select('marca.cod_marca', 'marca.dsc_marca','marca.flg_activo')

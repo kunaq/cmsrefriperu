@@ -44,6 +44,8 @@
                         <select class="form-control" id="ubicacion" name="ubicacion">
                             <option value="0">Todos</option>
                         </select>
+                    </div>
+                    <div id="ubicacion2">
                     </div> 
                     <div class="col-md-2">
                         <h5 class="headerh">&nbsp;</h5>
@@ -84,7 +86,7 @@
         $('#sede').select2();
 
         $('#ubicacion').select2();
-
+        
         //Se hace el slider filter.
         // $('.vermas').on('click',function(){
         //     var opt = $(this).attr('option');
@@ -110,7 +112,7 @@
 
         
         $("#sede").change(function (){
-            //Aqui se llama al subtipo
+            //Aqui se llama a la ubicacion
             var linea = $(this).val();
             var codCliente = "{{$codCliente}}";
             $.ajax({
@@ -124,7 +126,7 @@
                     'numLinea' : linea
                 },
                 success:function(data){
-                    //console.log('aqui',data);
+                    //console.log('aqui', data);
                     $('#ubicacion').html(data);
                     $('#ubicacion').trigger('change');   
                 }
@@ -134,8 +136,45 @@
             loadPageData();
         });
 
+        ///// aqui deberia ser cuando ubicacion cambia
+        $("#ubicacion").change(function (){
+            $("#ubicacion").change(function (){
+            //Aqui se llama a la ubicacion2
+            var linea = $('#sede').val();
+            var codCliente = "{{$codCliente}}";
+            var lineaSup = $('#ubicacion').val().split('+')[1];
+            console.log('lineaEnSelect', lineaSup);
+            $.ajax({
+                url : "{{ url('equipo/ubicaciones2')}}",
+                type: 'GET',
+                data: {
+                    'codCliente' : codCliente,
+                    'numLinea' : linea,
+                    'lineaSuperior' : lineaSup
+                },
+                success:function(data){
+                    console.log('numLinea',linea, 'lineaSuperior' , lineaSup);                    
+                    //$('#ubicacion2').select2();
+                    $('#ubicacion2').html(data);
+                    $('#ubicacion2').trigger('change'); 
+                    
+                    //console.log('lineaSuperior', data);  
+                }
+            });
+            //Se llama al equipo content
+            $("#equipo-content").html("");
+            loadPageData();
+            });
+        });
+        
+        /////fin cambio de ubicacion..
+
         //here start the triggers for the filters..
         $("#ubicacion").change(function(){
+            $("#equipo-content").html("");
+            loadPageData();    
+        });
+        $("#ubicacion2").change(function(){
             $("#equipo-content").html("");
             loadPageData();    
         });
@@ -152,10 +191,11 @@
     function loadPageData(){
         $.ajax({
             type: 'GET',
-            url: "{{url('equipo/listar')}}",
+            url: "{{url('equipo/listar2')}}",
             data: {
-                'tipo'     : $("#sede").val(),
-                'subtipo'  : $("#ubicacion").val(),
+                'sede'     : $("#sede").val(),
+                'ubicacion'  : $("#ubicacion").val(),
+                'ubicacion2'  : $("#ubicacion2").val()
             },
             beforeSend: function () {
                 $("#equipo-body").LoadingOverlay("show");
@@ -165,8 +205,8 @@
             },
             success:function(result){
                 var data = result;
-                console.log(data.items.length);
-                if(data.items.length > 0){
+                console.log('catidad de filas',data.items.length, 'codigo de sede', sede.value, 'codigo de ubicacion', ubicacion.value);
+                if(data.items.length > 0 && sede.value!=0 ){
                     $("#equipo-content").html(getEquipoTable(data.items));
 
                     $("#tbl-equipo").DataTable({
