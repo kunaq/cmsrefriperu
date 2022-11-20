@@ -137,12 +137,12 @@
         });
 
         ///// aqui deberia ser cuando ubicacion cambia
-        $("#ubicacion").change(function (){
+        //$("#ubicacion").change(function (){
             $("#ubicacion").change(function (){
             //Aqui se llama a la ubicacion2
             var linea = $('#sede').val();
             var codCliente = "{{$codCliente}}";
-            var lineaSup = $('#ubicacion').val().split('+')[1];
+            var lineaSup = (!$('#ubicacion').val().split('+')[1])? $('ubicacion').val() : $('#ubicacion').val().split('+')[0];
             console.log('lineaEnSelect', lineaSup);
             $.ajax({
                 url : "{{ url('equipo/ubicaciones2')}}",
@@ -165,15 +165,15 @@
             $("#equipo-content").html("");
             loadPageData();
             });
-        });
+        //});
         
         /////fin cambio de ubicacion..
 
         //here start the triggers for the filters..
-        $("#ubicacion").change(function(){
-            $("#equipo-content").html("");
-            loadPageData();    
-        });
+        // $("#ubicacion").change(function(){
+        //     $("#equipo-content").html("");
+        //     loadPageData();    
+        // });
         $("#ubicacion2").change(function(){
             $("#equipo-content").html("");
             loadPageData();    
