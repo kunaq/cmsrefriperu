@@ -143,12 +143,15 @@ class EquipoController extends Controller{
     }
 
     public function getListadoEquipo2(Request $request){
-      $numserie  = $request->numserie;
-      $tipo      = $request->tipo;
-      $subtipo   = $request->subtipo;
-      $nomequipo = $request->nomequipo;
-      $codmarca  = $request->codmarca;
-      $codmodel  = $request->codmodel;
+      $sede      = $request->sede;
+      $ubicacion = $request->ubicacion;
+      $ubicacion2= $request->ubicacion2;
+      // $numserie  = $request->numserie;
+      // $tipo      = $request->tipo;
+      // $subtipo   = $request->subtipo;
+      // $nomequipo = $request->nomequipo;
+      // $codmarca  = $request->codmarca;
+      // $codmodel  = $request->codmodel;
 
       //Se define la session del usuario
       $role      = Session()->get('rol');
