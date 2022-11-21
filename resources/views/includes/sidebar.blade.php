@@ -38,12 +38,12 @@
                                     </ul>
                                 </li>
 
-                                <li class="has-submenu">
+                                {{-- <li class="has-submenu">
                                     <a href="#"> <i class="fe-settings"></i>Configuración</a>
                                     <ul class="submenu">
                                         <li><a href="index.html">Cronograma de mantenimiento</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
 
                                 
                             </ul>

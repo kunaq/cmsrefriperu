@@ -372,11 +372,11 @@
                 '<div class="col-md-2" style="margin-bottom:0.5em;">Exportar: <img src="{{ asset("assets/images/icons/icon_excel.png") }}" title="Click para exportar" onclick="exportar()" style="height:30px;cursor:pointer;"></div>' +
                 '</div>';
             
-        body += '<table id="tbl-equipo" class="table table-bordered dt-responsive" style="border-collapse:collapse; border-spacing:0; width:100%;">' +
+        body += '<table id="tbl-equipo" class="table table-bordered dt-responsive" style="font-size:16px; border-collapse:collapse; border-spacing:0; width:100%;">' +
                     '<thead>' +
                     '<tr class="headtable">' +
                     '<th>N°</th>' + 
-                    '<th>Codigo</th>' +
+                    '<th>Código</th>' +
                     '<th>Sede</th>' + 
                     '<th>Ubicación</th>' + 
                     '<th>Nombre</th>' + 
@@ -479,7 +479,7 @@
                         //console.log(data);
                         var body  = '<div class="card-box table-responsive">';
                         // body += '<div class="row">'+'<div class="col-md-2" style="margin-bottom:0.5em;">Exportar: <img src="{{ asset("assets/images/icons/icon_excel.png") }}" title="Click para exportar" onclick="exportar()" style="height:30px;cursor:pointer;"></div>'+'</div>';
-                        body += '<div class="row">'+'<div class="col-md-12" style="margin-bottom:-2em; text-align:right;"><ion-icon size="large" style="color:#2D8B57;vertical-align: sub;" name="ellipse"></ion-icon>ATENDIDO <ion-icon size="large" style="color:#FFD603;vertical-align: sub;" name="ellipse"></ion-icon>EN PROCESO <ion-icon size="large" style="color:#FF4601;vertical-align: sub;" name="ellipse"></ion-icon>PENDIENTE <ion-icon size="large" style="color:#A9A9A9;vertical-align: sub;" name="ellipse"></ion-icon>SIN ORDEN DE TRABAJO</div></div>';
+                        body += '<div class="row">'+'<div class="col-md-12" style="margin-bottom:-2em; text-align:right; margin-top:1rem;padding-right:1rem;"><ion-icon size="large" style="color:#2D8B57;vertical-align: sub;" name="ellipse"></ion-icon>Atendido &nbsp; <ion-icon size="large" style="color:#FFD603;vertical-align: sub;" name="ellipse"></ion-icon>En proceso <ion-icon size="large" style="color:#FF4601;vertical-align: sub;" name="ellipse"></ion-icon>Pendiente <ion-icon size="large" style="color:#A9A9A9;vertical-align: sub;" name="ellipse"></ion-icon>Sin orden de trabajo</div></div>';
 
                         body += '<table id="tbl-det-equipo" class="table table-bordered dt-responsive" style="border-collapse:collapse; border-spacing:0; width:100%; font-size:16px">' +
                                     '<thead>' +
