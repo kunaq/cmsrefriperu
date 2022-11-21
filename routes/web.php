@@ -53,6 +53,7 @@ Route::group(['middleware' => 'autenticado'], function (){
     //Route::get('listaSede/{cod_cliente?}','EquipoController@getSedeDetalleEquipo');
     Route::get('ubicaciones/{codCliente?}','EquipoUbicacionesController@getUbicacion');
     Route::get('ubicaciones2/{codCliente?}{numLinea?}{lineaSuperior?}','EquipoUbicacionesController@getUbicacion2');
+    Route::get('ubicaciones3/{codCliente?}{numLinea?}{lineaSuperior?}','EquipoUbicacionesController@getUbicacion3');
     
   });
 

@@ -405,7 +405,7 @@
                     '<td>' + value.modelo + '</td>' +
                     '<td style="text-align:center;">' +
                     '<a class="urlicon" title="Ver detalle" href="javascript:void(0)" onclick="verdetalle(' + "'" + value.code + "'" + ')" >' +
-                    '<i class="dripicons-search"></i>' +
+                    '<i class="dripicons-preview"></i>' +
                     '</a>' +
                     '</td>' +
                     '</tr>';

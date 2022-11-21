@@ -146,6 +146,8 @@ class EquipoController extends Controller{
       $sede      = $request->sede;
       $ubicacion = $request->ubicacion;
       $ubicacion2= $request->ubicacion2;
+      $ubicacion3 = $request->ubicacio3;
+      $codcli  = Session()->get('cod_cli');
       // $numserie  = $request->numserie;
       // $tipo      = $request->tipo;
       // $subtipo   = $request->subtipo;
@@ -157,30 +159,35 @@ class EquipoController extends Controller{
       $role      = Session()->get('rol');
 
       //Se hace la busqueda
-      $equipos   = DB::table('gsema_equipo as equipo')
-                   ->join('gsema_tipo_equipo','equipo.cod_tipo_equipo', '=', 'gsema_tipo_equipo.cod_tipo_equipo')
-                   ->join('gsema_subtipo_equipo','equipo.cod_subtipo_equipo', '=', 'gsema_subtipo_equipo.cod_subtipo_equipo')
-                   ->join('feima_marca_articulo','equipo.cod_marca', '=', 'feima_marca_articulo.cod_marca')
-                   ->leftJoin('feima_modelo_articulo','equipo.cod_modelo', '=', 'feima_modelo_articulo.cod_modelo')
-                   ->join('mtoma_ubicacion', 'mtoma_ubicacion.cod_ubicacion', '=', 'equipo.cod_ubicacion')
-                   ->select('equipo.cod_equipo','equipo.dsc_equipo','equipo.cod_tipo_equipo','gsema_tipo_equipo.dsc_tipo_equipo',
-                          'gsema_subtipo_equipo.dsc_subtipo_equipo','feima_marca_articulo.dsc_marca','feima_modelo_articulo.dsc_modelo','equipo.num_serie',
-                          'equipo.num_parte','equipo.fch_compra','equipo.cod_proveedor','equipo.cod_cliente','equipo.num_pedido');
+      // $equipos   = DB::table('gsema_equipo as equipo')
+      //              ->join('gsema_tipo_equipo','equipo.cod_tipo_equipo', '=', 'gsema_tipo_equipo.cod_tipo_equipo')
+      //              ->join('gsema_subtipo_equipo','equipo.cod_subtipo_equipo', '=', 'gsema_subtipo_equipo.cod_subtipo_equipo')
+      //              ->join('feima_marca_articulo','equipo.cod_marca', '=', 'feima_marca_articulo.cod_marca')
+      //              ->leftJoin('feima_modelo_articulo','equipo.cod_modelo', '=', 'feima_modelo_articulo.cod_modelo')
+      //              ->join('mtoma_ubicacion', 'mtoma_ubicacion.cod_ubicacion', '=', 'equipo.cod_ubicacion')
+      //              ->select('equipo.cod_equipo','equipo.dsc_equipo','equipo.cod_tipo_equipo','gsema_tipo_equipo.dsc_tipo_equipo',
+      //                     'gsema_subtipo_equipo.dsc_subtipo_equipo','feima_marca_articulo.dsc_marca','feima_modelo_articulo.dsc_modelo','equipo.num_serie',
+      //                     'equipo.num_parte','equipo.fch_compra','equipo.cod_proveedor','equipo.cod_cliente','equipo.num_pedido');
 
               //             where mtoma_ubicacion.num_linea = '6' 
 						  // and mtoma_ubicacion.cod_cliente = 'CLI0000364' 
 						  // and mtoma_ubicacion.cod_ubicacion_sup = '00000073'
-      $total    = $equipos->count();
+      $equipos = DB::select('SET NOCOUNT ON; EXEC usp_Consultar_ListarEquipos ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?',[21,'','','','','','','','','','','',$codcli,$sede,'','','']);
 
-      if (!empty($sede)){
-          $equipos = $equipos->where('mtoma_ubicacion.num_linea', '=', $sede);
-      }
-      if (!empty($ubicacion)){
-          $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion', '=', $ubicacion);
-      }
-      if (!empty($ubicacion2)){
-        $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion_sup', '=', $ubicacion2);
-      }
+      $total    = sizeof($equipos);
+
+      // if (!empty($sede)){
+      //     $equipos = $equipos->where('mtoma_ubicacion.num_linea', '=', $sede);
+      // }
+      // if (!empty($ubicacion)){
+      //     $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion', '=', $ubicacion);
+      // }
+      // if (!empty($ubicacion2)){
+      //   $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion_sup', '=', $ubicacion2);
+      // }
+      // if (!empty($ubicacion3)){
+      //   $equipos = $equipos->where('mtoma_ubicacion.cod_ubicacion_sup', '=', $ubicacion);
+      // }
 
       // if (!empty($numserie))
       //     $equipos = $equipos->where('equipo.num_serie', 'like', '%' . $numserie . '%');
@@ -201,16 +208,15 @@ class EquipoController extends Controller{
       //     $equipos = $equipos->where('equipo.cod_modelo', '=', $codmodel);
 
       //Hacemos la validacion aqui:
-      if($role == config('constants.roles_name.cliente')){
-        $codcli  = Session()->get('cod_cli');
-        $equipos = $equipos->where('equipo.cod_cliente', '=', $codcli);
-      }
+      // if($role == config('constants.roles_name.cliente')){
+      //   $equipos = $equipos->where('equipo.cod_cliente', '=', $codcli);
+      // }
 
-      $filtrados = $equipos->count();
+      $filtrados = sizeof($equipos);
 
-      $equipos   = $equipos
-                  ->orderBy('equipo.dsc_equipo')
-                  ->get();
+      // $equipos   = $equipos
+      //             ->orderBy('equipo.dsc_equipo')
+      //             ->get();
 
       $data = [];
       foreach ($equipos as $item){
@@ -220,6 +226,7 @@ class EquipoController extends Controller{
         }else{
           $model = '';
         }
+        $ubicacion = $item->Nivel2.'//'.$item->Nivel1.'//'.$item->Nivel0;
 
         array_push($data, [
           "code"        => $item->cod_equipo,
@@ -231,8 +238,8 @@ class EquipoController extends Controller{
           "modelo"      => $model,
           "numserie"    => $item->num_serie,
           "numparte"    => $item->num_parte,
-          "fechacompra" => $item->fch_compra,
-          "numpedido"   => $item->num_pedido
+          "sede"        => $item->dsc_sede,
+          "ubicacion"   => $ubicacion
         ]);
       }
 

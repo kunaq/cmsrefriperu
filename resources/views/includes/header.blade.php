@@ -142,7 +142,7 @@
                                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img src="{{ asset('assets/images/users/admin-image.jpg') }}" alt="user-image" class="rounded-circle"> 
                                     <span class="pro-user-name ml-1">
-                                        Bienvenido: {{ session('usuario') }} <i class="mdi mdi-chevron-down"></i> 
+                                        Bienvenido: {{ session('coduser_reg') }} <i class="mdi mdi-chevron-down"></i> 
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -153,7 +153,7 @@
                                     </a>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="fe-settings"></i>
                                         <span>Herramientas</span>
                                     </a>
@@ -162,7 +162,7 @@
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="fe-lock"></i>
                                         <span>Lock Screen</span>
-                                    </a>
+                                    </a> --}}
 
                                     <div class="dropdown-divider"></div>
 
