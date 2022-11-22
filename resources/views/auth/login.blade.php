@@ -32,7 +32,7 @@
                                              <select name="lstrol" class="form-control" id="lstrol">
                                                  <option value="0">[Seleccione rol]</option>
                                                  <option value="1">Cliente</option>
-                                                 <option value="2">Trabajador</option>
+                                                 <option value="2">RefriPerú</option>
                                                  <!--<option value="3">Proveedor</option>-->
                                              </select>   
                                             </div>    

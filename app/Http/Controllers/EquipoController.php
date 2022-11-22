@@ -349,6 +349,7 @@ class EquipoController extends Controller{
             $direccion= DB::table('vtade_cliente_direccion as direccion')
                     ->select('direccion.dsc_nombre_direccion','direccion.num_linea')
                     ->where('direccion.cod_cliente','=',$cod_cliente)
+                    ->where('direccion.flg_plan_activo','=','SI')
                     ->get();
   
             $html = '<option value="0">[Todos]</option>';

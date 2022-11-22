@@ -26,10 +26,10 @@ body{
     border-color: #f06292;
 }
 
-.navbar-custom{background:#d92c28 !important;}
+.navbar-custom{background:#c7c4c4 !important;}
 body[data-layout=horizontal] .navbar-custom .topnav-menu .nav-link{color:#FFF !important;}
 .left-side-menu{background:#2f5597 !important;}
-.footer{background-color:#d92c28 !important;color:#FFF !important;}
+.footer{background-color:#c7c4c4  !important;color:#FFF !important;}
 #topnav{background:#134682 !important;}
 .urlicon{color:#134682;}
 .urlicon:hover{color:#2f5597;}

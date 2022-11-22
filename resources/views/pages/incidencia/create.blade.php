@@ -53,36 +53,33 @@
                             </div>
                             <div class="form-group">
                                 <label for="fecha-reporte">Fecha reporte (*)</label>
-                                <input type="date" class="form-control bordecaja" name="fecha_reporte" id="fecha_reporte">
+                                <input type="date" class="form-control bordecaja" name="fecha_reporte" id="fecha_reporte" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="lstcliente">Cliente (*)</label>
-                                <select class="form-control bordecaja" id="lstcliente" name="lstcliente">
+                                <select class="form-control bordecaja" id="lstcliente" name="lstcliente" disabled>
                                     <option value="0">[seleccione cliente]</option>
                                     @foreach($clientes as $cli)
-                                    <option value="{{$cli->cod_cliente}}">{{$cli->dsc_cliente}}</option>
+                                        <option value="{{$cli->cod_cliente}}" selected>{{$cli->dsc_cliente}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="lstlinea">Sucursal (*)</label>
+                                <label for="lstlinea">Sede (*)</label>
                                 <select class="form-control bordecaja" id="lstlinea" name="lstlinea">
                                     <option value="0">[seleccione linea]</option>
+                                    @foreach($listaSede as $sede)
+                                        <option value="{{$sede->num_linea}}">{{$sede->dsc_nombre_direccion}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="lstcontacto">Contacto (*)</label>
-                                <select class="form-control bordecaja" id="lstcontacto" name="lstcontacto">
+                                <select class="form-control bordecaja" id="lstcontacto" name="lstcontacto" disabled>
                                     <option value="0">[seleccione contacto]</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="lstequipo">Equipo</label>
-                                <select class="form-control bordecaja" id="lstequipo" name="lstequipo">
-                                    <option value="0">[seleccione equipo]</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="lstresponsable">Responsable</label>
                                 <select class="form-control bordecaja" id="lstresponsable" name="lstresponsable">
                                     <option value="0">[seleccione responsable]</option>
@@ -90,21 +87,27 @@
                     <option value="{{$respble->cod_trabajador}}">{{ $respble->dsc_nombres.','.$respble->dsc_apellido_paterno.' '.$respble->dsc_apellido_materno }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                                 
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="card-box">
-                            <!--<h4 class="header-title mb-4">Otros datos</h4>-->
                             <div class="form-group">
+                                <label for="lstequipo">Equipo</label>
+                                <select class="form-control bordecaja" id="lstequipo" name="lstequipo">
+                                    <option value="0">[seleccione equipo]</option>
+                                </select>
+                            </div>
+                            <!--<h4 class="header-title mb-4">Otros datos</h4>-->
+                            {{-- <div class="form-group">
                                 <label for="titulo">Título (*)</label>
                                 <input type="text" class="form-control bordecaja" name="titulo" id="titulo" placeholder="titulo">
-                            </div>
-                            <div class="form-group">
+                            </div> --}}
+                            <div class="form-group" style="padding-bottom:0.5rem;">
                                 <label for="lstarea">Detalle</label>
-                                <textarea name="descripcion" id="descripcion" rows="9" cols="50" class="form-control bordecaja"></textarea>
+                                <textarea name="descripcion" id="descripcion" rows="4" cols="50" class="form-control bordecaja"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="lstprioridad">Prioridad (*)</label>
@@ -121,23 +124,27 @@
                             </div> 
                             <div class="form-group">
                                 <label for="lstestado">Estado (*)</label>
-                                <select class="form-control bordecaja" id="lstestado" name="lstestado">
+                                <select class="form-control bordecaja" id="lstestado" name="lstestado" disabled>
                                     <option value="0">[seleccione estado]</option>
                                     @foreach($estado as $state)
-                                    @if($state->cod_estadoincidente=='001')
-                                    <option value="{{$state->cod_estadoincidente}}" selected>{{$state->dsc_estadoincidente}}</option>
-                                    @else
-                                    <option value="{{$state->cod_estadoincidente}}">{{$state->dsc_estadoincidente}}</option>
-                                    @endif
+                                        @if($state->cod_estadoincidente=='001')
+                                            <option value="{{$state->cod_estadoincidente}}" selected>{{$state->dsc_estadoincidente}}</option>
+                                        @else
+                                            <option value="{{$state->cod_estadoincidente}}">{{$state->dsc_estadoincidente}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="lstcanal">Canal reporte (*)</label>
-                                <select class="form-control bordecaja" id="lstcanal" name="lstcanal">
+                                <select class="form-control bordecaja" id="lstcanal" name="lstcanal" disabled>
                                     <option value="0">[seleccione canal]</option>
                                     @foreach($canales as $canal)
-                                    <option value="{{$canal->cod_canalreporte}}">{{$canal->dsc_canalreporte}}</option>
+                                        @if($canal->cod_canalreporte=='004')
+                                            <option value="{{$canal->cod_canalreporte}}" selected>{{$canal->dsc_canalreporte}}</option>
+                                        @else
+                                            <option value="{{$canal->cod_canalreporte}}">{{$canal->dsc_canalreporte}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

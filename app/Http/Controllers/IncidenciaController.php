@@ -152,6 +152,7 @@ class IncidenciaController extends Controller{
     }
 
     public function getCrearIncidencia(){
+        $codcli  = Session()->get('cod_cli');
         //Sacamos el listado de tipos de incidente
         $tipos     = DB::table('mtoma_tipoincidente as tipoincid')
                     ->select('tipoincid.cod_tipoincidente', 'tipoincid.dsc_tipoincidente')
@@ -160,9 +161,13 @@ class IncidenciaController extends Controller{
                     ->get();
 
         //Sacamos el listado de clientes
-        $clientes = DB::table('vtama_cliente as cliente')
-                    ->select('cliente.cod_cliente', 'cliente.dsc_razon_social','cliente.dsc_documento','cliente.dsc_cliente')
-                    ->orderBy('cliente.dsc_cliente')
+        $clientes = DB::table('vtade_cliente_direccion as cliente')
+                    ->select('cliente.cod_cliente', 'clienteMA.dsc_razon_social','clienteMA.dsc_documento','clienteMA.dsc_cliente')
+                    ->join('vtama_cliente as clienteMA','cliente.cod_cliente','=','clienteMA.cod_cliente')
+                    ->where('cliente.cod_cliente', '=','CLI0000364')
+                    ->where('cliente.flg_plan_activo','=','SI')
+                    ->distinct()
+                    ->orderBy('clienteMA.dsc_cliente')
                     ->get();
 
         //Sacamos el listado de prioridad
@@ -190,10 +195,16 @@ class IncidenciaController extends Controller{
                     ->orderBy('canal.dsc_canalreporte')
                     ->get();
 
+        $listaSede  = DB::table('vtade_cliente_direccion as direccion')
+                    ->select('direccion.dsc_nombre_direccion', 'direccion.num_linea')
+                    ->where('direccion.cod_cliente', '=','CLI0000364')
+                    ->orderBy('direccion.dsc_nombre_direccion')
+                    ->get();
+
         //Fecha actual
         $fecha    = Carbon::now('America/Lima');
 
-        return view('pages.incidencia.create',compact('tipos','clientes','prioridad','estado','respons','canales'));
+        return view('pages.incidencia.create',compact('tipos','clientes','prioridad','estado','respons','canales','listaSede'));
     }
 
     public function postCrearIncidencia(Request $request){
