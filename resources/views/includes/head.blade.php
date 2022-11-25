@@ -17,6 +17,7 @@
 <!-- css datatable -->
 <link href="{{asset('assets/libs/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/datatables/responsive.bootstrap4.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/libs/datatables/searchPanes.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- css select2 -->
 <link href="{{asset('assets/libs/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />

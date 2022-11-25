@@ -258,7 +258,7 @@
                     'lineaSuperior' : lineaSup
                 },
                 success:function(data){ 
-                    console.log('numLinea',linea, 'lineaSuperior' , lineaSup);   
+                    //console.log('numLinea',linea, 'lineaSuperior' , lineaSup);   
                     document.getElementById("divUbicacion2").style.display = "block";               
                     $('#ubicacion2').html(data);
                     //$('#ubicacion2').trigger('change'); 
@@ -344,7 +344,7 @@
                 if(data.items.length > 0 && sede.value!=0 ){
                     $("#equipo-content").html(getEquipoTable(data.items));
 
-                    $("#tbl-equipo").DataTable({
+                    var dt = $("#tbl-equipo").DataTable({
                         responsive: true,
                         filter: false,
                         lengthChange: true,
@@ -354,7 +354,40 @@
                         info: true,
                         language:{
                           "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                        }
+                        },
+                        searchPanes: {
+                            viewTotal: true,
+                            columns: [4]
+                        },
+                        dom: 'Plfrtip',
+                        columnDefs: [
+                            {
+                                searchPanes: {
+                                    options: [
+                                        {
+                                            label: 'Nivel 1',
+                                            value: function(rowData, rowIdx) {
+                                                console.log(rowData[4].include($('#ubicacion2').options[this.selectedIndex].text));
+                                                return rowData[4].include($('#ubicacion2').options[this.selectedIndex].text);
+                                            }
+                                        }
+                                    ]
+                                },
+                                targets: [0]
+                            }
+                        ],
+                        select: {
+                            style:    'os',
+                            selector: 'td:first-child'
+                        },
+                        order: [[ 1, 'asc' ]]                        
+                    });
+                    dt.on('select.dt', () => {          
+                        dt.searchPanes.rebuildPane(0, true);
+                    });
+
+                    dt.on('deselect.dt', () => {
+                        dt.searchPanes.rebuildPane(0, true);
                     });
                 }else{
                     $("#equipo-content").html(getEmptyContent());

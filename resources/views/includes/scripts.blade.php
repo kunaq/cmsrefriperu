@@ -4,6 +4,7 @@
 <!-- Required datatable js -->
 <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libs/datatables/dataTables.searchPanes.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('assets/libs/datatables/dataTables.responsive.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/libs/datatables/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
